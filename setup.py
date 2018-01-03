@@ -7,14 +7,13 @@ setuptools.setup(
     package_dir={'': 'src'},
     entry_points={
         'console_scripts': [
-            (
-                'urlshortener_update_gitignore'
-                '= urlshortener.cli.updategitignore:cli'
-                '[gitignore]'
-            ),
+            'urlshortener = urlshortener.cli.admin:cli',
         ],
     },
     install_requires=[
+        'flask-sqlalchemy',
         'gitignoreio',
+        'psycopg2',
+        'sqlalchemy',
     ],
 )
