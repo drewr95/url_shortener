@@ -16,3 +16,8 @@ def db():
 @db.command()
 def create():
     urlshortener.application.db.create_all()
+
+
+@db.command()
+def drop():
+    urlshortener.application.db.drop_all()
