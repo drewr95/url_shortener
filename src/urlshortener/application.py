@@ -59,4 +59,4 @@ def add():
 def get(short):
     pair = Pair.query.filter_by(short=short).first()
 
-    return flask.redirect(pair)
+    return flask.redirect(pair.long)
