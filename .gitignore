@@ -3,7 +3,9 @@
 
 
 
-# Created by https://www.gitignore.io/api/git,vim,python,pycharm
+# Created by https://www.gitignore.io/api/git,vim,python,pycharm,.idea
+
+#!! ERROR: .idea is undefined. Use list command to see defined gitignore types !!#
 
 ### Git ###
 *.orig
@@ -190,4 +192,4 @@ Session.vim
 # auto-generated tag files
 tags
 
-# End of https://www.gitignore.io/api/git,vim,python,pycharm
+# End of https://www.gitignore.io/api/git,vim,python,pycharm,.idea
