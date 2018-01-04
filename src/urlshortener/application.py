@@ -66,7 +66,7 @@ def add():
     return flask.jsonify(short=short)
 
 
-def redirect(url : string)
+def redirect(url : str):
     return flask.redirect(url)
 
 
