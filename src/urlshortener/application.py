@@ -5,24 +5,29 @@ import string
 import flask
 import flask_sqlalchemy
 import sqlalchemy
+from sqlalchemy.ext import declarative
+import sqlalchemy.orm
 import requests
 
 page_blueprint = flask.Blueprint('page_blueprint', __name__)
-db = flask_sqlalchemy.SQLAlchemy()
-
+Base = declarative.declared_base()
+engine = None
+Session = sqlalchemy.orm.sessionmaker()
 
 def createApp():
     app = flask.Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     app.register_blueprint(page_blueprint)
-    db = flask_sqlalchemy.SQLAlchemy(app)
+    engine = sqlalchemy.create_engine(app)
+    Session.configure(bind=engine)
     return app
 
 
-class Pair(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    short = db.Column(db.String, unique=True)
-    long = db.Column(db.String)
+class Pair(Base):
+    __tablename__ = 'pair'
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    short = sqlalchemy.column(sqlalchemy.String, unique=True)
+    long = sqlalchemy.Column(sqlalchemy.String)
 
 
 short_characters = string.ascii_letters + string.digits
@@ -55,6 +60,7 @@ def hello():
 @page_blueprint.route('/add', methods=['POST'])
 def add():
     attempts = 42
+    session = Session()
 
     for attempt in range(attempts):
         short = create_short()
@@ -64,10 +70,12 @@ def add():
             long=flask.request.headers['long'],
         )
         pair.long = getURL(url=pair.long)
-        db.session.add(pair)
+        session.add(pair)
+        # db.session.add(pair)
 
         try:
-            db.session.commit()
+            session.commit()
+            # db.session.commit()
         except sqlalchemy.exc.IntegrityError:
             if attempt < attempts:
                 continue
