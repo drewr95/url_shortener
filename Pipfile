@@ -6,12 +6,12 @@ verify_ssl = true
 
 [packages]
 
-flask = "*"
+Flask = "*"
 gunicorn = "*"
 "e1839a8" = {path = ".", editable = true}
 gitignoreio = "*"
-sqlalchemy = "*"
-flask-sqlalchemy = "*"
+SQLAlchemy = "*"
+Flask-SQLAlchemy = "*"
 "psycopg2" = "*"
 requests = "*"
 
