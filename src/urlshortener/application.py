@@ -42,7 +42,7 @@ def getURL(url : str):
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return flask.jsonify("Hello World!")
 
 
 @app.route('/add', methods=['POST'])
