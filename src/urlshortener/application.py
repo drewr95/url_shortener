@@ -5,6 +5,7 @@ import string
 import flask
 import flask_sqlalchemy
 import sqlalchemy
+import requests
 
 app = flask.Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
@@ -24,14 +25,19 @@ def create_short():
     return ''.join(random.choices(short_characters, k=5))
 
 
-def add_prefix(url: str):
+def getURL(url : str):
+    """
+    adds the proper http(s) prefix to the url if it doesn't already exist
+    :param url: url string to be checked
+    :return: proper url path
+    """
     if "http" not in url:
         if "www" not in url:
             url = "http://www." + url
         else:
             url = "http://" + url
 
-    return url
+    return requests.get(url).url
 
 
 @app.route("/")
@@ -50,7 +56,7 @@ def add():
             short=short,
             long=flask.request.headers['long'],
         )
-        pair.long = add_prefix(url=pair.long)
+        pair.long = getURL(url=pair.long)
         db.session.add(pair)
 
         try:
