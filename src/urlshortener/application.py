@@ -24,6 +24,14 @@ def create_short():
     return ''.join(random.choices(short_characters, k=5))
 
 
+def add_prefix(url: str):
+    if "http" not in url:
+        if "www" not in url:
+            url = "http://www." + url
+        else:
+            url = "http://" + url
+
+
 @app.route("/")
 def hello():
     return "Hello World!"
@@ -40,6 +48,7 @@ def add():
             short=short,
             long=flask.request.headers['long'],
         )
+        add_prefix(url=pair.long)
         db.session.add(pair)
 
         try:
@@ -59,4 +68,4 @@ def add():
 def get(short):
     pair = Pair.query.filter_by(short=short).first()
 
-    return flask.redirect(str(pair.long))
+    return flask.redirect(pair.long)
