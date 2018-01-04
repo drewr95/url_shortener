@@ -31,6 +31,8 @@ def add_prefix(url: str):
         else:
             url = "http://" + url
 
+    return url
+
 
 @app.route("/")
 def hello():
@@ -48,7 +50,7 @@ def add():
             short=short,
             long=flask.request.headers['long'],
         )
-        add_prefix(url=pair.long)
+        pair.long = add_prefix(url=pair.long)
         db.session.add(pair)
 
         try:
