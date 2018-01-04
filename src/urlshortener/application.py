@@ -47,39 +47,38 @@ def getURL(url : str):
     return requests.get(url).url
 
 
-# @app.route("/")
 @page_blueprint.route('/')
 def hello():
     return flask.jsonify("Hello World!")
 
 
-# @app.route('/add', methods=['POST'])
-# def add():
-#     attempts = 42
-#
-#     for attempt in range(attempts):
-#         short = create_short()
-#
-#         pair = Pair(
-#             short=short,
-#             long=flask.request.headers['long'],
-#         )
-#         pair.long = getURL(url=pair.long)
-#         db.session.add(pair)
-#
-#         try:
-#             db.session.commit()
-#         except sqlalchemy.exc.IntegrityError:
-#             if attempt < attempts:
-#                 continue
-#
-#             raise
-#
-#         break
-#
-#     return flask.jsonify(short=short)
-#
-#
+@page_blueprint.route('/add', methods=['POST'])
+def add():
+    attempts = 42
+
+    for attempt in range(attempts):
+        short = create_short()
+
+        pair = Pair(
+            short=short,
+            long=flask.request.headers['long'],
+        )
+        pair.long = getURL(url=pair.long)
+        db.session.add(pair)
+
+        try:
+            db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+            if attempt < attempts:
+                continue
+
+            raise
+
+        break
+
+    return flask.jsonify(short=short)
+
+
 # @app.route('/get/<short>')
 # def get(short):
 #     pair = Pair.query.filter_by(short=short).first()
