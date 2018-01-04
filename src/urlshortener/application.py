@@ -13,18 +13,19 @@ page_blueprint = flask.Blueprint('page_blueprint', __name__)
 Base = declarative.declared_base()
 Session = sessionmaker()
 
+
 def createApp():
     app = flask.Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     app.register_blueprint(page_blueprint)
-    engine = sqlalchemy.create_engine(app)
-    Session.configure(bind=engine)
+    # engine = sqlalchemy.create_engine(app)
+    # Session.configure(bind=engine)
     return app
 
 
 class Pair(Base):
     __tablename__ = 'pair'
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.Sequence('user_id_seq'), primary_key=True)
     short = sqlalchemy.column(sqlalchemy.String, unique=True)
     long = sqlalchemy.Column(sqlalchemy.String)
 
@@ -36,7 +37,7 @@ def create_short():
     return ''.join(random.choices(short_characters, k=5))
 
 
-def getURL(url : str):
+def getURL(url: str):
     """
     adds the proper http(s) prefix to the url if it doesn't already exist
     :param url: url string to be checked
