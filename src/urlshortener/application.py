@@ -86,8 +86,8 @@ def get(short):
     return flask.jsonify(long=pair.long)
 
 
-# @app.route('/<short>')
-# def redirect(short):
-#     pair = Pair.query.filter_by(short=short).first()
-#
-#     return flask.redirect(pair.long)
+@page_blueprint.route('/<short>')
+def redirect(short):
+    pair = Pair.query.filter_by(short=short).first()
+
+    return flask.redirect(pair.long)
