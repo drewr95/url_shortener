@@ -6,13 +6,12 @@ import flask
 import flask_sqlalchemy
 import sqlalchemy
 from sqlalchemy.ext import declarative
-import sqlalchemy.orm
+from sqlalchemy.orm import sessionmaker
 import requests
 
 page_blueprint = flask.Blueprint('page_blueprint', __name__)
 Base = declarative.declared_base()
-engine = None
-Session = sqlalchemy.orm.sessionmaker()
+Session = sessionmaker()
 
 def createApp():
     app = flask.Flask(__name__)
