@@ -1,8 +1,10 @@
-import pytest
 import requests
-import urlshortener.application
+# import urlshortener.application
 
-base_url = 'https://drew-urlshortener.heroku.com'
+base_url = 'https://drew-urlshortener.herokuapp.com'
 
-def test_quick():
-    assert 5 == 5
+def test_hello():
+    request = requests.get(base_url)
+    assert 'Hello World!' == request.json()
+
+    
