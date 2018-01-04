@@ -59,4 +59,4 @@ def add():
 def get(short):
     pair = Pair.query.filter_by(short=short).first()
 
-    return flask.jsonify(long=pair.long)
+    return flask.redirect(pair)
