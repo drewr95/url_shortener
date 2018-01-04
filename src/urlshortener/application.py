@@ -66,12 +66,7 @@ def add():
     return flask.jsonify(short=short)
 
 
-def redirect(url : str):
-    return flask.redirect(url)
-
-
 @app.route('/get/<short>')
 def get(short):
     pair = Pair.query.filter_by(short=short).first()
-    redirect(url=pair.long)
-    return flask.jsonify(pair.long)
+    return flask.redirect(pair.long)
