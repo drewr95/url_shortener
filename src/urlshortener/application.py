@@ -10,7 +10,7 @@ import requests
 page_blueprint = flask.Blueprint('page_blueprint', __name__)
 db = flask_sqlalchemy.SQLAlchemy()
 
-def create_app():
+def createApp():
     app = flask.Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     db = flask_sqlalchemy.SQLAlchemy(app)
