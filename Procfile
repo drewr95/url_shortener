@@ -1,1 +1,1 @@
-web: gunicorn urlshortener.application:app
+web: gunicorn "urlshortener.application:createApp()"
