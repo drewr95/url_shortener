@@ -13,6 +13,7 @@ gitignoreio = "*"
 sqlalchemy = "*"
 flask-sqlalchemy = "*"
 "psycopg2" = "*"
+requests = "*"
 
 
 [requires]
