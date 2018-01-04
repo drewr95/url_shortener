@@ -9,7 +9,7 @@ def testHello():
 
 def testGetURL():
     url = 'google.com'
-    assert 'http://www.google.com' == application.getURL(url=url)
+    assert 'http://www.google.com/' == application.getURL(url=url)
 
 
 
