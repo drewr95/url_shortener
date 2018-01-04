@@ -7,9 +7,16 @@ import flask_sqlalchemy
 import sqlalchemy
 import requests
 
-app = flask.Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-db = flask_sqlalchemy.SQLAlchemy(app)
+page_blueprint = flask.Blueprint('page_blueprint', __name__)
+db = flask_sqlalchemy.SQLAlchemy()
+
+
+def createApp():
+    app = flask.Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+    app.register_blueprint(page_blueprint)
+    db = flask_sqlalchemy.SQLAlchemy(app)
+    return app
 
 
 class Pair(db.Model):
@@ -40,12 +47,12 @@ def getURL(url : str):
     return requests.get(url).url
 
 
-@app.route("/")
+@page_blueprint.route('/')
 def hello():
-    return "Hello World!"
+    return flask.jsonify("Hello World!")
 
 
-@app.route('/add', methods=['POST'])
+@page_blueprint.route('/add', methods=['POST'])
 def add():
     attempts = 42
 
@@ -72,14 +79,14 @@ def add():
     return flask.jsonify(short=short)
 
 
-@app.route('/get/<short>')
+@page_blueprint.route('/get/<short>')
 def get(short):
     pair = Pair.query.filter_by(short=short).first()
 
     return flask.jsonify(long=pair.long)
 
 
-@app.route('/<short>')
+@page_blueprint.route('/<short>')
 def redirect(short):
     pair = Pair.query.filter_by(short=short).first()
 
