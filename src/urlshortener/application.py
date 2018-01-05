@@ -79,5 +79,5 @@ def get(short):
 @page_blueprint.route('/<short>')
 def redirect(short):
     with session_scope() as session:
-        pair = session.query(Pair).filter_by(short=short).first()
+        pair = Pair(session.query(Pair).filter_by(short=short).first())
         return flask.redirect(long=pair.long)
