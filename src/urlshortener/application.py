@@ -10,19 +10,19 @@ import sqlalchemy.orm
 page_blueprint = flask.Blueprint('page_blueprint', __name__)
 engine = sqlalchemy.create_engine(os.environ['DATABASE_URL'])
 Base = sqlalchemy.ext.declarative.declarative_base(bind=engine)
-Session = sqlalchemy.orm.scoped_session(sqlalchemy.orm.sessionmaker(bind=engine))
+Session = sqlalchemy.orm.sessionmaker(bind=engine)
 
 @contextmanager
 def session_scope():
-    session = Session()
+    session = sqlalchemy.orm.scoped_session(Session())
 
     try:
         yield session
         session.commit()
     except:
         raise
-    finally:
-        session.close()
+    # finally:
+    #     session.close()
 
 
 def createApp():
@@ -41,7 +41,7 @@ class Pair(Base):
 
 @page_blueprint.route('/')
 def hello():
-    return flask.jsonify("Hello World!")
+    return flask.jsonify('Hello World!')
 
 
 @page_blueprint.route('/add', methods=['POST'])
