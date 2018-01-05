@@ -16,7 +16,8 @@ Session = sessionmaker()
 
 @contextmanager
 def session_scope():
-    session = Session()
+    session = flask_sqlalchemy.SessionBase()
+
     try:
         yield session()
         session.commit()
