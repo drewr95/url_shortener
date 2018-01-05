@@ -18,7 +18,7 @@ def createApp():
     app = flask.Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     app.register_blueprint(page_blueprint)
-    # engine = sqlalchemy.create_engine(app)
+    engine = sqlalchemy.create_engine(app)
     # Session.configure(bind=engine)
     return app
 
