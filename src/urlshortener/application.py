@@ -22,7 +22,7 @@ def session_scope():
     except:
         raise
     finally:
-        session.remove()
+        session.close()
 
 
 def createApp():
