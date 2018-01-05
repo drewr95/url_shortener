@@ -77,7 +77,7 @@ def get(short):
     with session_scope() as session:
         pair = session.query(Pair).filter_by(short=short).first()
 
-    return flask.jsonify(long=pair.long)
+    return flask.jsonify(long=pair)
 
 
 @page_blueprint.route('/<short>')
