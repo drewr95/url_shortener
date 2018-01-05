@@ -10,7 +10,7 @@ import sqlalchemy.ext.declarative
 import sqlalchemy.orm
 
 page_blueprint = flask.Blueprint('page_blueprint', __name__)
-Base = sqlalchemy.ext.declarative.declarative_base()
+Base = None
 Session = sqlalchemy.orm.sessionmaker()
 
 @contextmanager
@@ -32,6 +32,7 @@ def createApp():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     app.register_blueprint(page_blueprint)
     engine = sqlalchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+    Base = sqlalchemy.ext.declarative.declarative_base(bind=engine)
     Session.configure(bind=engine)
     return app
 
