@@ -19,7 +19,7 @@ def session_scope():
     session = Session()
 
     try:
-        yield session()
+        yield session
         session.commit()
     except:
         session.rollback()
