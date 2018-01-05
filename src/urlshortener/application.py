@@ -73,6 +73,7 @@ def add():
         session.add(pair)
 
         session.commit()
+        session.close()
         break;
         # try:
         #     # session.commit()
@@ -91,7 +92,7 @@ def add():
 def get(short):
     session = Session()
     pair = session.query(Pair).filter_by(short=short).first()
-
+    session.close()
     return flask.jsonify(long=pair.long)
 
 
@@ -99,5 +100,5 @@ def get(short):
 def redirect(short):
     session = Session()
     pair = session.query(Pair).filter_by(short=short).first()
-
+    session.close()
     return flask.redirect(pair.long)
