@@ -49,10 +49,9 @@ def add():
     attempts = 42
 
     for attempt in range(attempts):
-        short = urlshortener.url.create_short()
 
         pair = Pair(
-            short=short,
+            short=urlshortener.url.create_short(),
             long=flask.request.headers['long'],
         )
         pair.long = urlshortener.url.getURL(url=pair.long)
@@ -70,7 +69,7 @@ def add():
         #
         # break
 
-    return flask.jsonify(short=short)
+    return flask.jsonify(short=pair.short)
 
 
 @page_blueprint.route('/get/<short>')

@@ -14,8 +14,9 @@ def testGetURL():
 def testAdd():
     url = base_url + "/add"
     headers = {'long':'google.com'}
-    print(requests.get(url, headers=headers).json())
-    assert requests.get(url, headers=headers).json() is not None
+    request = requests.get(url=url, headers=headers)
+    print(request.json())
+    assert request.json() is not None
 
 
 
