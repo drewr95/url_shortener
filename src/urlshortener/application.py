@@ -72,15 +72,15 @@ def add():
         pair.long = getURL(url=pair.long)
         session.add(pair)
 
-        try:
-            # session.commit()
-        except sqlalchemy.exc.IntegrityError:
-            if attempt < attempts:
-                continue
-
-            raise
-
-        break
+        # try:
+        #     # session.commit()
+        # except sqlalchemy.exc.IntegrityError:
+        #     if attempt < attempts:
+        #         continue
+        #
+        #     raise
+        #
+        # break
 
     return flask.jsonify(short=short)
 
