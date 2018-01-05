@@ -15,8 +15,8 @@ def db():
 
 @db.command()
 def create():
-    with urlshortener.application.session_scope() as session:
-        session.create_all()
+    with urlshortener.application.Base as base:
+        base.metadata.drop_all()
     # urlshortener.application.db.create_all()
 
 

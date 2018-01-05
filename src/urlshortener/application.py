@@ -6,12 +6,12 @@ from contextlib import contextmanager
 import flask
 import requests
 import sqlalchemy
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+import sqlalchemy.ext.declarative
+import sqlalchemy.orm
 
 page_blueprint = flask.Blueprint('page_blueprint', __name__)
-Base = declarative_base()
-Session = sessionmaker()
+Base = sqlalchemy.ext.declarative.declarative_base()
+Session = sqlalchemy.orm.sessionmaker()
 
 @contextmanager
 def session_scope():
