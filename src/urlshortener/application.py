@@ -73,13 +73,11 @@ def add():
 def get(short):
     with session_scope() as session:
         pair = session.query(Pair).filter_by(short=short).first()
-
-    return flask.jsonify(long=pair.long)
+        return flask.jsonify(long=pair.long)
 
 
 @page_blueprint.route('/<short>')
 def redirect(short):
     with session_scope() as session:
         pair = session.query(Pair).filter_by(short=short).first()
-
-    return flask.redirect(pair.long)
+        return flask.redirect(pair.long)
