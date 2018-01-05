@@ -19,7 +19,7 @@ def createApp():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     app.register_blueprint(page_blueprint)
     engine = sqlalchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
-    Session.configure(bind=engine)
+    # Session.configure(bind=engine)
     return app
 
 
