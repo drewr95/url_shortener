@@ -1,14 +1,13 @@
 import os
 import random
 import string
+from contextlib import contextmanager
 
 import flask
-import flask_sqlalchemy
+import requests
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session, sessionmaker
-import requests
-from contextlib import contextmanager
+from sqlalchemy.orm import sessionmaker
 
 page_blueprint = flask.Blueprint('page_blueprint', __name__)
 Base = declarative_base()
