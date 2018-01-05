@@ -80,4 +80,4 @@ def get(short):
 def redirect(short):
     with session_scope() as session:
         pair = session.query(Pair).filter_by(short=short).first()
-        return flask.redirect(pair.long)
+        return flask.redirect(long=pair.long)
