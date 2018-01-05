@@ -21,9 +21,6 @@ def session_scope():
         session.commit()
     except:
         raise
-    # finally:
-    #     session.close()
-
 
 def createApp():
     app = flask.Flask(__name__)
@@ -77,7 +74,7 @@ def get(short):
     with session_scope() as session:
         pair = session.query(Pair).filter_by(short=short).first()
 
-    return flask.jsonify(long=pair)
+    return flask.jsonify(long=pair.long)
 
 
 @page_blueprint.route('/<short>')
