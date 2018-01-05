@@ -6,7 +6,7 @@ import flask
 import flask_sqlalchemy
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import scoped_session, sessionmaker
 import requests
 from contextlib import contextmanager
 
@@ -16,7 +16,7 @@ Session = sessionmaker()
 
 @contextmanager
 def session_scope():
-    session = flask_sqlalchemy.SessionBase()
+    session = Session()
 
     try:
         yield session()
@@ -102,7 +102,6 @@ def add():
 
 @page_blueprint.route('/get/<short>')
 def get(short):
-    pair = None
     with session_scope() as session:
         pair = session.query(Pair).filter_by(short=short).first()
 
@@ -111,7 +110,6 @@ def get(short):
 
 @page_blueprint.route('/<short>')
 def redirect(short):
-    pair = None
     with session_scope() as session:
         pair = session.query(Pair).filter_by(short=short).first()
 
