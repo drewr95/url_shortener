@@ -1,9 +1,11 @@
-import flask_sqlalchemy
+import sqlalchemy.ext.declarative
+import sqlalchemy
 
-db = flask_sqlalchemy.SQLAlchemy()
+db_session = None
+Base = sqlalchemy.ext.declarative.declarative_base()
 
-
-class Pair(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    short = db.Column(db.String, unique=True)
-    long = db.Column(db.String)
+class Pair(Base):
+    __tablename__ = 'pair'
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    short = sqlalchemy.Column(sqlalchemy.String, unique=True)
+    long = sqlalchemy.Column(sqlalchemy.String)

@@ -12,7 +12,8 @@ def createApp():
     app = flask.Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     app.register_blueprint(page_blueprint)
-    urlshortener.database.db.init_app(app)
+    engine = sqlalchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+    urlshortener.database.db_session = sqlalchemy.orm.scoped_session(sqlalchemy.orm.sessionmaker(bind=engine))
     return app
 
 
@@ -32,10 +33,10 @@ def add():
             long=flask.request.headers['long'],
         )
         pair.long = urlshortener.url.getURL(url=pair.long)
-        urlshortener.database.db.add(pair)
+        urlshortener.database.db_session.add(pair)
 
         try:
-            urlshortener.database.db.commit()
+            urlshortener.database.db_session.commit()
         except sqlalchemy.exc.IntegrityError:
             if attempt < attempts:
                 continue
@@ -50,7 +51,7 @@ def add():
 @page_blueprint.route('/get/<short>')
 def get(short):
     pair = urlshortener.database.Pair.query.filter_by(short=short).first()
-    return flask.jsonify(long=pair.long)
+    return flask.jsonify(pair.long)
 
 
 @page_blueprint.route('/<short>')
