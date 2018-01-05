@@ -21,5 +21,5 @@ def create():
 
 @db.command()
 def drop():
-    urlshortener.application.Pair.__table__.drop_all()
+    urlshortener.application.Base.metadata.drop_all()
     # urlshortener.application.db.drop_all()
