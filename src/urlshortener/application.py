@@ -1,10 +1,8 @@
 import os
-import random
-import string
 from contextlib import contextmanager
 
 import flask
-import requests
+import urlshortener.url
 import sqlalchemy
 import sqlalchemy.ext.declarative
 import sqlalchemy.orm
@@ -41,28 +39,6 @@ class Pair(Base):
     long = sqlalchemy.Column(sqlalchemy.String)
 
 
-short_characters = string.ascii_letters + string.digits
-
-
-def create_short():
-    return ''.join(random.choices(short_characters, k=5))
-
-
-def getURL(url: str):
-    """
-    adds the proper http(s) prefix to the url if it doesn't already exist
-    :param url: url string to be checked
-    :return: proper url path
-    """
-    if "http" not in url:
-        if "www" not in url:
-            url = "http://www." + url
-        else:
-            url = "http://" + url
-
-    return requests.get(url).url
-
-
 @page_blueprint.route('/')
 def hello():
     return flask.jsonify("Hello World!")
@@ -73,13 +49,13 @@ def add():
     attempts = 42
 
     for attempt in range(attempts):
-        short = create_short()
+        short = urlshortener.url.create_short()
 
         pair = Pair(
             short=short,
             long=flask.request.headers['long'],
         )
-        pair.long = getURL(url=pair.long)
+        pair.long = urlshortener.url.getURL(url=pair.long)
         with session_scope() as session:
             session.add(pair)
 
