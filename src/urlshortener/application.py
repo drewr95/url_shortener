@@ -39,7 +39,7 @@ def createApp():
 
 class Pair(Base):
     __tablename__ = 'pair'
-    id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.Sequence('user_id_seq'), primary_key=True)
+    id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.Sequence('id'), primary_key=True)
     short = sqlalchemy.Column(sqlalchemy.String, unique=True)
     long = sqlalchemy.Column(sqlalchemy.String)
 
