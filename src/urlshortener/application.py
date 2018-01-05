@@ -10,8 +10,9 @@ import sqlalchemy.ext.declarative
 import sqlalchemy.orm
 
 page_blueprint = flask.Blueprint('page_blueprint', __name__)
-Base = None
-Session = sqlalchemy.orm.sessionmaker()
+engine = sqlalchemy.create_engine(os.environ['DATABASE_URL'])
+Base = sqlalchemy.ext.declarative.declarative_base(bind=engine)
+Session = sqlalchemy.orm.sessionmaker(bind=engine)
 
 @contextmanager
 def session_scope():
@@ -31,9 +32,6 @@ def createApp():
     app = flask.Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     app.register_blueprint(page_blueprint)
-    engine = sqlalchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
-    Base = sqlalchemy.ext.declarative.declarative_base(bind=engine)
-    Session.configure(bind=engine)
     return app
 
 
