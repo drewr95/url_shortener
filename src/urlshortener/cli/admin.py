@@ -15,9 +15,13 @@ def db():
 
 @db.command()
 def create():
-    urlshortener.application.db.create_all()
+    with urlshortener.application.scoped_session() as session:
+        session.create_all()
+    # urlshortener.application.db.create_all()
 
 
 @db.command()
 def drop():
-    urlshortener.application.db.drop_all()
+    with urlshortener.application.scoped_session() as session:
+        session.drop_all()
+    # urlshortener.application.db.drop_all()
