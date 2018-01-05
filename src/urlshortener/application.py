@@ -12,11 +12,11 @@ import sqlalchemy.orm
 page_blueprint = flask.Blueprint('page_blueprint', __name__)
 engine = sqlalchemy.create_engine(os.environ['DATABASE_URL'])
 Base = sqlalchemy.ext.declarative.declarative_base(bind=engine)
-Session = sqlalchemy.orm.sessionmaker(bind=engine)
+# Session = sqlalchemy.orm.sessionmaker(bind=engine)
 
 @contextmanager
 def session_scope():
-    session = Session()
+    session = sqlalchemy.orm.sessionmaker(bind=engine)
 
     try:
         yield session
