@@ -5,12 +5,12 @@ import string
 import flask
 import flask_sqlalchemy
 import sqlalchemy
-from sqlalchemy.ext import declarative
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import requests
 
 page_blueprint = flask.Blueprint('page_blueprint', __name__)
-Base = declarative.declared_base()
+Base = declarative_base()
 Session = sessionmaker()
 
 
@@ -26,7 +26,7 @@ def createApp():
 class Pair(Base):
     __tablename__ = 'pair'
     id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.Sequence('user_id_seq'), primary_key=True)
-    short = sqlalchemy.column(sqlalchemy.String, unique=True)
+    short = sqlalchemy.Column(sqlalchemy.String, unique=True)
     long = sqlalchemy.Column(sqlalchemy.String)
 
 
