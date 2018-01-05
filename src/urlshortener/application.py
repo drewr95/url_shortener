@@ -73,7 +73,7 @@ def add():
         session.add(pair)
 
         try:
-            session.commit()
+            # session.commit()
         except sqlalchemy.exc.IntegrityError:
             if attempt < attempts:
                 continue
