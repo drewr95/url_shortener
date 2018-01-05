@@ -14,7 +14,7 @@ Session = sqlalchemy.orm.sessionmaker(bind=engine)
 
 @contextmanager
 def session_scope():
-    session = sqlalchemy.orm.scoped_session(Session())
+    session = sqlalchemy.orm.scoped_session(Session)
 
     try:
         yield session
