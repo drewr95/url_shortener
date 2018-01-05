@@ -8,10 +8,23 @@ import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import requests
+from contextlib import contextmanager
 
 page_blueprint = flask.Blueprint('page_blueprint', __name__)
 Base = declarative_base()
 Session = sessionmaker()
+
+@contextmanager
+def session_scope():
+    session = Session()
+    try:
+        yield session()
+        session.commit()
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
 
 
 def createApp():
@@ -60,7 +73,6 @@ def hello():
 @page_blueprint.route('/add', methods=['POST'])
 def add():
     attempts = 42
-    session = Session()
 
     for attempt in range(attempts):
         short = create_short()
@@ -70,10 +82,9 @@ def add():
             long=flask.request.headers['long'],
         )
         pair.long = getURL(url=pair.long)
-        session.add(pair)
+        with session_scope() as session:
+            session.add(pair)
 
-        session.commit()
-        session.close()
         break;
         # try:
         #     # session.commit()
@@ -90,15 +101,17 @@ def add():
 
 @page_blueprint.route('/get/<short>')
 def get(short):
-    session = Session()
-    pair = session.query(Pair).filter_by(short=short).first()
-    session.close()
+    pair = None
+    with session_scope() as session:
+        pair = session.query(Pair).filter_by(short=short).first()
+
     return flask.jsonify(long=pair.long)
 
 
 @page_blueprint.route('/<short>')
 def redirect(short):
-    session = Session()
-    pair = session.query(Pair).filter_by(short=short).first()
-    session.close()
+    pair = None
+    with session_scope() as session:
+        pair = session.query(Pair).filter_by(short=short).first()
+
     return flask.redirect(pair.long)
