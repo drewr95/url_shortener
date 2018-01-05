@@ -72,6 +72,8 @@ def add():
         pair.long = getURL(url=pair.long)
         session.add(pair)
 
+        session.commit()
+        break;
         # try:
         #     # session.commit()
         # except sqlalchemy.exc.IntegrityError:
