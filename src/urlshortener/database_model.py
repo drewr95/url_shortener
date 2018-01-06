@@ -1,10 +1,13 @@
-import flask_sqlalchemy
-import urlshortener.application
+import sqlalchemy
+import sqlalchemy.ext.declarative
+import sqlalchemy.orm
 
-db = flask_sqlalchemy.SQLAlchemy(urlshortener.application.app)
+Base = sqlalchemy.ext.declarative.declarative_base()
+Session =
 
+class Pair(Base):
+    __tablename__ = 'pair'
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    short = sqlalchemy.Column(sqlalchemy.String, unique=True)
+    long = sqlalchemy.Column(sqlalchemy.String)
 
-class Pair(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    short = db.Column(db.String, unique=True)
-    long = db.Column(db.String)
