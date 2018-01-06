@@ -1,7 +1,3 @@
-import sqlalchemy
-import sqlalchemy.ext.declarative
-import sqlalchemy.orm
-import flask
 import flask_sqlalchemy
 import urlshortener.application
 
