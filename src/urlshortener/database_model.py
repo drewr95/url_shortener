@@ -3,7 +3,6 @@ import sqlalchemy.ext.declarative
 import sqlalchemy.orm
 
 Base = sqlalchemy.ext.declarative.declarative_base()
-Session =
 
 class Pair(Base):
     __tablename__ = 'pair'
